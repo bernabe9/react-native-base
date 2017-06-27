@@ -24,6 +24,8 @@ AppWithNavigationState.propTypes = {
   nav: object.isRequired
 };
 
-const mapStateToProps = ({ nav }) => ({ nav });
+const mapStateToProps = (state) => ({
+  nav: state.get('nav').toJS()
+});
 
 export default connect(mapStateToProps)(AppWithNavigationState);
