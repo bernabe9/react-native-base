@@ -11,4 +11,4 @@ export const login = {
 };
 
 export const validations = constraints =>
-  data => validate(data, constraints) || {};
+  data => validate(data.toJS(), constraints) || {};

@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import LoginForm from '../components/user/LoginForm';
+import * as userActions from '../actions/userActions';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,11 +21,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const LoginScreen = ({ navigation }) => (
+const LoginScreen = ({ navigation, actions: { login } }) => (
   <View style={styles.container}>
     <Text style={styles.welcome}>
       LOGIN
     </Text>
+    <LoginForm onSubmit={login}/>
     <Button
       onPress={() => navigation.dispatch({ type: 'Login' })}
       title="Log in"
@@ -38,4 +44,8 @@ LoginScreen.navigationOptions = {
   title: 'Log In'
 };
 
-export default LoginScreen;
+const mapDispatch = dispatch => ({
+  actions: bindActionCreators(userActions, dispatch)
+});
+
+export default connect(null, mapDispatch)(LoginScreen);
