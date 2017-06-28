@@ -1,13 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form/immutable'
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
 
 import Input from '../common/Input';
 import * as constraints from '../../utils/constraints';
 
+const styles = StyleSheet.create({
+  login: {
+    width: 230
+  }
+});
+
 const LoginForm = ({ handleSubmit, error }) => (
-  <View onSubmit={handleSubmit}>
+  <View style={styles.login} onSubmit={handleSubmit}>
     {error && <Text>{error}</Text>}
     <Field
       name="email"
@@ -18,6 +24,7 @@ const LoginForm = ({ handleSubmit, error }) => (
       name="password"
       label="Password"
       component={Input}
+      password={true}
     />
     <Button title="LOGIN" onPress={handleSubmit} />
   </View>
