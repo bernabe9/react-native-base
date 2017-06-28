@@ -1,33 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-});
+import LoginForm from '../components/user/LoginForm';
+import * as userActions from '../actions/userActions';
 
-const LoginScreen = ({ navigation }) => (
+const LoginScreen = ({ navigation, actions: { login } }) => (
   <View style={styles.container}>
     <Text style={styles.welcome}>
-      Screen A
+      LOGIN
     </Text>
-    <Text style={styles.instructions}>
-      This is great
-    </Text>
-    <Button
-      onPress={() => navigation.dispatch({ type: 'Login' })}
-      title="Log in"
-    />
+    <LoginForm onSubmit={(user) => login(user.toJS())}/>
   </View>
 );
 
@@ -41,4 +26,22 @@ LoginScreen.navigationOptions = {
   title: 'Log In'
 };
 
-export default LoginScreen;
+const mapDispatch = dispatch => ({
+  actions: bindActionCreators(userActions, dispatch)
+});
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF'
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10
+  },
+});
+
+export default connect(null, mapDispatch)(LoginScreen);

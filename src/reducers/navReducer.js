@@ -1,41 +1,44 @@
 import { NavigationActions } from 'react-navigation';
+import Immutable from 'immutable';
 
-import { AppNavigator } from '../components/AppNavigator';
+import { AppNavigator } from '../navigation/AppNavigator';
 
 const {
   getActionForPathAndParams,
   getStateForAction
 } = AppNavigator.router;
 
-const initialNavState = getStateForAction(getActionForPathAndParams('Login'));
+const initialNavState = Immutable.fromJS(getStateForAction(getActionForPathAndParams('Login')));
 
 const nav = (state = initialNavState, action) => {
   let nextState;
   switch (action.type) {
-    case 'Login':
+    case '@@redux-react-session/SESSION_CHECKED_SUCCESS':
+      nextState = getStateForAction(getActionForPathAndParams('Main'));
+    case 'LOGIN_SUCCESS':
       nextState = AppNavigator.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
           actions: [NavigationActions.navigate({ routeName: 'Main' })]
         }),
-        state
+        state.toJS()
       );
       break;
-    case 'Logout':
+    case 'LOGOUT_SUCCESS':
       nextState = AppNavigator.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
           actions: [NavigationActions.navigate({ routeName: 'Login' })]
         }),
-        state
+        state.toJS()
       );
       break;
     default:
-      nextState = AppNavigator.router.getStateForAction(action, state);
+      nextState = AppNavigator.router.getStateForAction(action, state.toJS());
   }
 
   // Simply return the original `state` if `nextState` is null or undefined.
-  return nextState || state;
+  return nextState ? Immutable.fromJS(nextState) : state;
 }
 
 export default nav;
