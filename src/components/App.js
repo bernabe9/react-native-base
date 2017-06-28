@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import Immutable from 'immutable';
 import { sessionService } from 'redux-react-native-session';
-import AppReducer from '../reducers';
 
-import AppWithNavigationState from './AppNavigator';
+import AppReducer from '../reducers';
+import AppWithNavigationState from '../navigation/AppNavigator';
 import configureStore from '../store/configureStore';
 
 class App extends Component {

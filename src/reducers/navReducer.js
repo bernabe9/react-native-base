@@ -1,7 +1,7 @@
 import { NavigationActions } from 'react-navigation';
 import Immutable from 'immutable';
 
-import { AppNavigator } from '../components/AppNavigator';
+import { AppNavigator } from '../navigation/AppNavigator';
 
 const {
   getActionForPathAndParams,
@@ -13,7 +13,9 @@ const initialNavState = Immutable.fromJS(getStateForAction(getActionForPathAndPa
 const nav = (state = initialNavState, action) => {
   let nextState;
   switch (action.type) {
-    case 'Login':
+    case '@@redux-react-session/SESSION_CHECKED_SUCCESS':
+      nextState = getStateForAction(getActionForPathAndParams('Main'));
+    case 'LOGIN_SUCCESS':
       nextState = AppNavigator.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -22,7 +24,7 @@ const nav = (state = initialNavState, action) => {
         state.toJS()
       );
       break;
-    case 'Logout':
+    case 'LOGOUT_SUCCESS':
       nextState = AppNavigator.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
