@@ -19,8 +19,8 @@ class App extends Component {
       <Provider store={this.store}>
         <AppWithNavigationState />
       </Provider>
-    )
+    );
   }
-} 
+}
 
 export default App;
